@@ -1,5 +1,7 @@
 package com.progmatic.labyrinthproject;
 
+import com.progmatic.labyrinthproject.enums.Direction;
+
 /**
  * A simple immutable class for encapsulating a row and a column index.
  * 
@@ -20,6 +22,10 @@ public class Coordinate {
 
     public int getCol() {
         return col;
+    }
+
+    public Coordinate getNewCoordinateByDirection(Direction d) {
+        return new Coordinate(this.getCol() + d.getColOffset(), this.getRow() + d.getRowOffset());
     }
 
     @Override

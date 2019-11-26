@@ -4,45 +4,41 @@
  * and open the template in the editor.
  */
 
-import com.progmatic.labyrinthproject.Coordinate;
+import com.progmatic.labyrinthproject.*;
 import com.progmatic.labyrinthproject.enums.CellType;
 import com.progmatic.labyrinthproject.enums.Direction;
 import com.progmatic.labyrinthproject.exceptions.CellException;
 import com.progmatic.labyrinthproject.exceptions.InvalidMoveException;
 import com.progmatic.labyrinthproject.interfaces.Labyrinth;
 import com.progmatic.labyrinthproject.interfaces.Player;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
 import static org.junit.Assert.*;
 
 /**
- *
  * @author pappgergely
  */
 public class LabyrinthTest {
-    
+
     public LabyrinthTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    
+
     @Test
     public void testSetSizeAndGetWidthHeight() {
         Labyrinth l = getLabyrinthImpl();
@@ -58,13 +54,13 @@ public class LabyrinthTest {
         assertEquals(20, l.getWidth());
         assertEquals(30, l.getHeight());
     }
-    
+
     @Test
     public void testGetCellType() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#"},
-            {"S", " ", "E"},
-            {"#", "#", "#"}};
+                {"#", "#", "#"},
+                {"S", " ", "E"},
+                {"#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         assertEquals(CellType.WALL, l.getCellType(new Coordinate(0, 0)));
         assertEquals(CellType.WALL, l.getCellType(new Coordinate(1, 0)));
@@ -76,33 +72,33 @@ public class LabyrinthTest {
         assertEquals(CellType.WALL, l.getCellType(new Coordinate(1, 2)));
         assertEquals(CellType.WALL, l.getCellType(new Coordinate(2, 2)));
     }
-    
+
     @Test(expected = CellException.class)
     public void testGetCellTypeException1() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#"},
-            {"S", " ", "E"},
-            {"#", "#", "#"}};
+                {"#", "#", "#"},
+                {"S", " ", "E"},
+                {"#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         l.getCellType(new Coordinate(-1, 1));
     }
-    
+
     @Test(expected = CellException.class)
     public void testGetCellTypeException2() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#"},
-            {"S", " ", "E"},
-            {"#", "#", "#"}};
+                {"#", "#", "#"},
+                {"S", " ", "E"},
+                {"#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         l.getCellType(new Coordinate(1, -1));
     }
-    
+
     @Test(expected = CellException.class)
     public void testGetCellTypeException3() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#"},
-            {"S", " ", "E"},
-            {"#", "#", "#"}};
+                {"#", "#", "#"},
+                {"S", " ", "E"},
+                {"#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         l.getCellType(new Coordinate(3, 3));
     }
@@ -110,23 +106,23 @@ public class LabyrinthTest {
     @Test
     public void testHasPlayerFinished() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#"},
-            {"S", " ", "#"},
-            {"#", "#", "#"}};
+                {"#", "#", "#"},
+                {"S", " ", "#"},
+                {"#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         assertEquals(false, l.hasPlayerFinished());
         l.setCellType(new Coordinate(0, 1), CellType.END);
         assertEquals(true, l.hasPlayerFinished());
     }
-    
+
     @Test
     public void testPlayerPositionAndMovePlayer() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#", "#", "#"},
-            {"S", " ", "#", " ", "E"},
-            {"#", " ", "#", " ", "#"},
-            {"#", " ", " ", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"S", " ", "#", " ", "E"},
+                {"#", " ", "#", " ", "#"},
+                {"#", " ", " ", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         assertEquals(new Coordinate(0, 1), l.getPlayerPosition());
         l.movePlayer(Direction.EAST);
@@ -152,196 +148,218 @@ public class LabyrinthTest {
     @Test
     public void testPossibleMoves() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#", "#", "#"},
-            {"#", " ", " ", " ", "E"},
-            {"#", " ", "S", " ", "#"},
-            {"#", " ", " ", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"#", " ", " ", " ", "E"},
+                {"#", " ", "S", " ", "#"},
+                {"#", " ", " ", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         assertEquals(4, l.possibleMoves().size());
-        
+
         String[][] lArr2 = {
-            {"#", "#", "#", "#", "#"},
-            {"#", " ", "#", " ", "E"},
-            {"#", "#", "S", "#", "#"},
-            {"#", " ", "#", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"#", " ", "#", " ", "E"},
+                {"#", "#", "S", "#", "#"},
+                {"#", " ", "#", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         l = fromString(lArr2);
         assertEquals(0, l.possibleMoves().size());
-        
+
         String[][] lArr3 = {
-            {"#", "#", "#", "#", "#"},
-            {"#", " ", "#", " ", "E"},
-            {"#", " ", "S", "#", "#"},
-            {"#", " ", "#", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"#", " ", "#", " ", "E"},
+                {"#", " ", "S", "#", "#"},
+                {"#", " ", "#", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         l = fromString(lArr3);
         assertEquals(1, l.possibleMoves().size());
         assertEquals(Direction.WEST, l.possibleMoves().get(0));
-        
+
         String[][] lArr4 = {
-            {"#", "#", "#", "#", "#"},
-            {"#", " ", " ", " ", "E"},
-            {"#", " ", "S", "#", "#"},
-            {"#", " ", "#", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"#", " ", " ", " ", "E"},
+                {"#", " ", "S", "#", "#"},
+                {"#", " ", "#", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         l = fromString(lArr4);
         assertEquals(2, l.possibleMoves().size());
-        
+
         String[][] lArr5 = {
-            {"#", "#", "#", "#", "#"},
-            {"#", " ", "#", " ", "E"},
-            {"#", " ", "S", "#", "#"},
-            {"#", " ", " ", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"#", " ", "#", " ", "E"},
+                {"#", " ", "S", "#", "#"},
+                {"#", " ", " ", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         l = fromString(lArr5);
         assertEquals(2, l.possibleMoves().size());
-        
+
         String[][] lArr6 = {
-            {"#", "#", "#", "#", "#"},
-            {"#", " ", "#", " ", "E"},
-            {"#", "#", "S", " ", "#"},
-            {"#", " ", "#", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"#", " ", "#", " ", "E"},
+                {"#", "#", "S", " ", "#"},
+                {"#", " ", "#", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         l = fromString(lArr6);
         assertEquals(1, l.possibleMoves().size());
         assertEquals(Direction.EAST, l.possibleMoves().get(0));
-        
+
         String[][] lArr7 = {
-            {"#", "#", "#", "#", "#"},
-            {"#", " ", " ", " ", "E"},
-            {"#", "#", "S", "#", "#"},
-            {"#", " ", "#", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"#", " ", " ", " ", "E"},
+                {"#", "#", "S", "#", "#"},
+                {"#", " ", "#", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         l = fromString(lArr7);
         assertEquals(1, l.possibleMoves().size());
         assertEquals(Direction.NORTH, l.possibleMoves().get(0));
     }
-    
+
     @Test
     public void testLoadFile() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#", "#", "#"},
-            {"S", " ", "#", " ", "E"},
-            {"#", " ", "#", " ", "#"},
-            {"#", " ", " ", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"S", " ", "#", " ", "E"},
+                {"#", " ", "#", " ", "#"},
+                {"#", " ", " ", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         Labyrinth lSample = fromString(lArr);
         Labyrinth l = getLabyrinthImpl();
         l.loadLabyrinthFile("labyrinth1.txt");
         assertSameLabyrinth(l, lSample);
         assertEquals(new Coordinate(0, 1), l.getPlayerPosition());
-        
+
         l = getLabyrinthImpl();
         l.loadLabyrinthFile("labyrinth2.txt");
         assertEquals(new Coordinate(0, 1), l.getPlayerPosition());
     }
-    
+
     @Test
     public void testRandomPlayer() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#", "#", "#"},
-            {"S", " ", "#", " ", "E"},
-            {"#", " ", "#", " ", "#"},
-            {"#", " ", " ", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"S", " ", "#", " ", "E"},
+                {"#", " ", "#", " ", "#"},
+                {"#", " ", " ", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         Player rp = getRandomPlayerImpl();
-        while (! l.hasPlayerFinished()) {
+        while (!l.hasPlayerFinished()) {
             Direction d = rp.nextMove(l);
-            l.movePlayer( d );
+            l.movePlayer(d);
         }
         assertEquals(true, l.hasPlayerFinished());
         assertEquals(l.getCellType(l.getPlayerPosition()), CellType.END);
-        
+
         Labyrinth l2 = getLabyrinthImpl();
         l2.loadLabyrinthFile("labyrinth2.txt");
-        while (! l2.hasPlayerFinished()) {
+        while (!l2.hasPlayerFinished()) {
             Direction d = rp.nextMove(l2);
-            l2.movePlayer( d );
+            l2.movePlayer(d);
         }
         assertEquals(true, l2.hasPlayerFinished());
         assertEquals(l2.getCellType(l2.getPlayerPosition()), CellType.END);
     }
-    
+
     @Test
     public void testWallFollowerPlayer() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#", "#", "#"},
-            {"S", " ", "#", " ", "E"},
-            {"#", " ", "#", " ", "#"},
-            {"#", " ", " ", " ", "#"},
-            {"#", "#", "#", "#", "#"}};
+                {"#", "#", "#", "#", "#"},
+                {"S", " ", "#", " ", "E"},
+                {"#", " ", "#", " ", "#"},
+                {"#", " ", " ", " ", "#"},
+                {"#", "#", "#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         Player wp = getWallFollowerPlayerImpl();
-        while (! l.hasPlayerFinished()) {
+        int cycle = 0;
+        while (!l.hasPlayerFinished()) {
+            cycle++;
             Direction d = wp.nextMove(l);
-            l.movePlayer( d );
+            l.movePlayer(d);
         }
         assertEquals(true, l.hasPlayerFinished());
         assertEquals(l.getCellType(l.getPlayerPosition()), CellType.END);
-        
-        String[] files = {"labyrinth2.txt", "labyrinth3.txt"};
-        for (String file : files) {
-            l = getLabyrinthImpl();
-            l.loadLabyrinthFile(file);
-            while (! l.hasPlayerFinished()) {
-                Direction d = wp.nextMove(l);
-                l.movePlayer( d );
-            }
-            assertEquals(true, l.hasPlayerFinished());
-            assertEquals(l.getCellType(l.getPlayerPosition()), CellType.END);
-        }
+        System.out.println("str: " + cycle);
+        assertTrue("Hatékonytalan!", cycle < 10);
+
+        //String[] files = {"labyrinth2.txt", "labyrinth3.txt"};
+        //for (String file : files) {
+        l = getLabyrinthImpl();
+        l.loadLabyrinthFile("labyrinth2.txt");
+        cycle = testWallFollower(l, wp);
+        System.out.println("2: " + cycle);
+        assertTrue("Hatékonytalan!",cycle < 151);
+
+        l.loadLabyrinthFile("labyrinth3.txt");
+        cycle = testWallFollower(l, wp);
+        System.out.println("3: " + cycle);
+        assertTrue("Hatékonytalan!",cycle < 31500);
+
     }
-    
+
+
+
+    int testWallFollower(Labyrinth l, Player wp) throws InvalidMoveException, CellException {
+        int cycle = 0;
+        while (!l.hasPlayerFinished()) {
+            cycle++;
+            Direction d = wp.nextMove(l);
+            l.movePlayer(d);
+        }
+        assertEquals(true, l.hasPlayerFinished());
+        assertEquals(l.getCellType(l.getPlayerPosition()), CellType.END);
+
+        return cycle;
+    }
+
     @Test
+    @Ignore
     public void testConsciousPlayer() throws Exception {
         Player cp = getConsciousPlayerImpl();
-        
+
         String[] files = {"labyrinth1.txt", "labyrinth2.txt", "labyrinth3.txt"};
         for (String file : files) {
             Labyrinth l = getLabyrinthImpl();
             l.loadLabyrinthFile(file);
-            while (! l.hasPlayerFinished()) {
+            while (!l.hasPlayerFinished()) {
                 Direction d = cp.nextMove(l);
-                l.movePlayer( d );
+                l.movePlayer(d);
             }
             assertEquals(true, l.hasPlayerFinished());
             assertEquals(l.getCellType(l.getPlayerPosition()), CellType.END);
         }
     }
-    
+
     @Test(expected = InvalidMoveException.class)
     public void testInvalidMove1() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#"},
-            {"S", " ", "E"},
-            {"#", "#", "#"}};
+                {"#", "#", "#"},
+                {"S", " ", "E"},
+                {"#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         l.movePlayer(Direction.NORTH);
     }
-    
+
     @Test(expected = InvalidMoveException.class)
     public void testInvalidMove2() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#"},
-            {"S", " ", "E"},
-            {"#", "#", "#"}};
+                {"#", "#", "#"},
+                {"S", " ", "E"},
+                {"#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         l.movePlayer(Direction.EAST);
         l.movePlayer(Direction.SOUTH);
     }
-    
+
     @Test(expected = InvalidMoveException.class)
     public void testInvalidMove3() throws Exception {
         String[][] lArr = {
-            {"#", "#", "#"},
-            {"S", " ", "E"},
-            {"#", "#", "#"}};
+                {"#", "#", "#"},
+                {"S", " ", "E"},
+                {"#", "#", "#"}};
         Labyrinth l = fromString(lArr);
         l.movePlayer(Direction.WEST);
     }
-    
+
     private void assertSameLabyrinth(Labyrinth l1, Labyrinth l2) throws CellException {
         assertEquals(l1.getHeight(), l2.getHeight());
         assertEquals(l1.getWidth(), l2.getWidth());
@@ -352,7 +370,7 @@ public class LabyrinthTest {
             }
         }
     }
-    
+
     private Labyrinth fromString(String[][] strArr) throws CellException {
         Labyrinth l = getLabyrinthImpl();
         l.setSize(strArr[0].length, strArr.length);
@@ -379,24 +397,24 @@ public class LabyrinthTest {
         }
         return l;
     }
-    
+
     // TODO
     private Labyrinth getLabyrinthImpl() {
-        return null;
+        return new LabyrinthImpl();
     }
-    
+
     // TODO
     private Player getRandomPlayerImpl() {
-        return null;
+        return new RandomPlayer();
     }
-    
+
     // TODO
     private Player getWallFollowerPlayerImpl() {
-        return null;
+        return new WallFollowerPlayer();
     }
-    
+
     // TODO
     private Player getConsciousPlayerImpl() {
-        return null;
+        return new PlayerImpl();
     }
 }
